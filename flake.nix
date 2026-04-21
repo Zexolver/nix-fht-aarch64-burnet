@@ -75,14 +75,13 @@
         name = "fht-compositor-burnet";
         paths = [ fht-bin ];
         nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
+       postBuild = ''
           wrapProgram $out/bin/fht-compositor \
             --set WLR_RENDERER gles2 \
             --set WLR_NO_HARDWARE_CURSORS 1 \
             --set SMITHAY_USE_GLES2 1 \
-            #--set BRIDGE_PATH "$HOME/.local/share/nix-burnet-bridge" \
             --run 'export BRIDGE_PATH="$HOME/.local/share/nix-burnet-bridge"' \
-	    --prefix LD_LIBRARY_PATH="$HOME/.local/share/nix-burnet-bridge:/usr/lib/aarch64-linux-gnu"' \
+            --prefix LD_LIBRARY_PATH : "$HOME/.local/share/nix-burnet-bridge:/usr/lib/aarch64-linux-gnu" \
             --set __EGL_VENDOR_LIBRARY_FILENAMES "/usr/share/glvnd/egl_vendor.d/50_mesa.json"
         '';
       };
